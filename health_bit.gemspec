@@ -2,6 +2,7 @@
 
 require_relative 'lib/health_bit/version'
 
+# rubocop:disable Layout/LineLength
 Gem::Specification.new do |spec|
   spec.name          = 'health_bit'
   spec.version       = HealthBit::VERSION
@@ -25,3 +26,4 @@ Gem::Specification.new do |spec|
 
   spec.add_dependency 'rack'
 end
+# rubocop:enable Layout/LineLength

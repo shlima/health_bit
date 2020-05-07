@@ -1,4 +1,4 @@
-[![pipeline status](https://travis-ci.com/shlima/health_bit.svg?branch=master)](https://travis-ci.com/shlima/click_house)
+[![pipeline status](https://travis-ci.com/shlima/health_bit.svg?branch=master)](https://travis-ci.com/shlima/health_bit)
 
 # HealthBit
 
