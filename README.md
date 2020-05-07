@@ -45,6 +45,11 @@ HealthBit.configure do |c|
   c.success_code = 200
   c.fail_code = 500
   c.show_backtrace = false
+
+  c.add('Check name') do
+    # Body check, should returns `true` 
+    true
+  end
 end
 ```
         
@@ -150,6 +155,30 @@ end
 
 ## Multiple endpoints
 
-Sometimes you need to add several health check endpoints. Let's say 
+Sometimes you have to add several health check endpoints. Let's say 
 you have to check the docker container health and the health 
-of your application as a whole.
+of your application as a whole. Below is an example for rails.
+
+```ruby
+# config/initializers/health_bit.rb
+
+DockerCheck = HealthBit.clone
+AppCheck = HealthBit.clone
+
+DockerCheck.add('Docker Health') do
+  true
+end
+
+AppCheck.add('App Health') do
+  ApplicationRecord.connection.select_value("SELECT 't'::boolean")
+end
+```
+
+```ruby
+# config/routes.rb
+
+Rails.application.routes.draw do
+  mount DockerCheck.rack => '/docker'
+  mount AppCheck.rack => '/app'
+end
+```
