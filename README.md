@@ -9,7 +9,7 @@ This gem was inspired by the [health_check](https://github.com/ianheggie/health_
 extensible and contains up to 95% less code.
 
 Key differences:
-* is a rack application
+* is a rack application (just a lambda function)
 * can be used with rails, sinatra or any other rack application
 * can add custom checks
 * can add multiple endpoints with independent checks
