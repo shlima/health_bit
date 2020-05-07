@@ -13,7 +13,7 @@ Key differences:
 * can be used with rails, sinatra or any other rack application
 * can add custom checks
 * can add multiple endpoints with independent checks
-* can use any Rack middleware (http authorization, ip address check)
+* can use any rack middleware (such as http basic auth, IP whitelist)
 
 ## Toc
 
