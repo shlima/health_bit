@@ -33,7 +33,7 @@ module HealthBit
   end
 
   def headers
-    @headers || DEFAULT_HEADERS
+    (@headers || DEFAULT_HEADERS).dup
   end
 
   def checks

@@ -58,6 +58,12 @@ RSpec.describe HealthBit do
       end
     end
 
+    context 'when modified' do
+      it 'returns a clone (for the Grape)' do
+        expect { subject.headers.clear }.not_to change { subject.headers }
+      end
+    end
+
     context 'when set' do
       before do
         subject.headers = { foo: :bar }
