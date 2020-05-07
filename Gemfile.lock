@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    health_bit (0.1.0)
+    health_bit (0.1.1)
       rack
 
 GEM
