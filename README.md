@@ -44,7 +44,7 @@ gem 'health_bit'
 HealthBit.configure do |c|
   c.success_text = '%<count>d checks passed 🎉'
   c.headers = { 
-    'Content-Type' => 'text/html;charset=utf-8', 
+    'Content-Type' => 'text/plain;charset=utf-8', 
     'Cache-Control' => 'private,max-age=0,must-revalidate,no-store' 
   }
   c.success_code = 200
