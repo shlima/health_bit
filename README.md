@@ -1,5 +1,7 @@
 # HealthBit
 
+![](./doc/logo.png?sanitize=true)
+
 This gem was inspired by the [health_check](https://github.com/ianheggie/health_check), but is simpler and more 
 extensible and contains up to 95% less code.
 
