@@ -1,3 +1,5 @@
+[![pipeline status](https://travis-ci.com/shlima/health_bit.svg?branch=master)](https://travis-ci.com/shlima/click_house)
+
 # HealthBit
 
 ![](./doc/logo.png?sanitize=true)
