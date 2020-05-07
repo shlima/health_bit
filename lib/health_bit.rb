@@ -6,7 +6,7 @@ require 'health_bit/version'
 module HealthBit
   DEFAULT_SUCCESS_TEXT = '%<count>d checks passed 🎉'
   DEFAULT_HEADERS = {
-    'Content-Type' => 'text/plain',
+    'Content-Type' => 'text/html;charset=utf-8',
     'Cache-Control' => 'private,max-age=0,must-revalidate,no-store'
   }.freeze
   DEFAULT_SUCCESS_CODE = 200
