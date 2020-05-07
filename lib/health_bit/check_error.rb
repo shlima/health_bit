@@ -22,7 +22,7 @@ module HealthBit
         describe_exception(io)
       end
 
-      io.string
+      io.string.chomp
     end
 
     private
@@ -31,7 +31,7 @@ module HealthBit
       return if exception.nil?
 
       io.puts exception.inspect
-      io.puts exception.backtrace.join("\n")
+      io.puts Array(exception.backtrace).join("\n")
     end
   end
 end

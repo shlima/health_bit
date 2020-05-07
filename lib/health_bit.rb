@@ -51,7 +51,7 @@ module HealthBit
     MSG
 
     raise ArgumentError, <<~MSG unless handler || block
-      Not <handler> or <block> were passed to the <#{name}> check
+      Nor <handler> or <block> were passed to the <#{name}> check
     MSG
 
     checks.push(Check.new(name, handler || block))

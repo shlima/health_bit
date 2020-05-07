@@ -41,7 +41,7 @@ RSpec.describe HealthBit do
 
       expect(status).to eq(503)
       expect(headers).to eq('app2' => 2)
-      expect(content).to contain_exactly("Check <app2> failed\n")
+      expect(content).to contain_exactly("Check <app2> failed")
     end
   end
 end
