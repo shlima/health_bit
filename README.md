@@ -98,7 +98,7 @@ end
 # (to be able to test your check)
 class Covid19Check 
   def self.call
-    true 
+    false 
   end
 end
 
@@ -121,14 +121,14 @@ end
 ## Password Protection
 
 Since the gem is a common rack application, you can add any rack
-middleware. Below is an example with HTTP-auth for the Rails.
+middleware to it. Below is an example with HTTP-auth for the Rails.
 
 ```ruby
 # config/routes.rb
 
 Rails.application.routes.draw do
   HealthBit.rack.use Rack::Auth::Basic do |username, password|
-    ActiveSupport::SecurityUtils.secure_compare(Digest::SHA256.hexdigest(username), ::Digest::SHA256.hexdigest('user')) & ActiveSupport::SecurityUtils.secure_compare(Digest::SHA256.hexdigest(password), ::Digest::SHA256.hexdigest('password'))
+    ActiveSupport::SecurityUtils.secure_compare(Digest::SHA256.hexdigest(username), Digest::SHA256.hexdigest('user')) & ActiveSupport::SecurityUtils.secure_compare(Digest::SHA256.hexdigest(password), Digest::SHA256.hexdigest('password'))
   end
   
   mount HealthBit.rack => '/health'
@@ -203,7 +203,7 @@ end
 
 Sometimes you have to add several health check endpoints. Let's say 
 you have to check the docker container health and the health 
-of your application as a whole. Below is an example for rails.
+of your application as a whole. Below is an example for the Rails.
 
 ```ruby
 # config/initializers/health_bit.rb
