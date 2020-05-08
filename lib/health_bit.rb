@@ -83,4 +83,10 @@ module HealthBit
       end
     end
   end
+
+  def clone
+    Module.new.tap do |dolly|
+      dolly.singleton_class.include(HealthBit)
+    end
+  end
 end

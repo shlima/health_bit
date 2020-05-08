@@ -8,6 +8,12 @@ RSpec.describe HealthBit do
   end
 
   before do
+    # just initialize instance variable
+    # inside a donor
+    described_class.checks
+  end
+
+  before do
     app1.headers = { 'app1' => 1 }
     app1.success_code = 201
     app1.fail_code = 0

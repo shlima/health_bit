@@ -177,4 +177,46 @@ RSpec.describe HealthBit do
       end
     end
   end
+
+  describe '#clone' do
+    let!(:donor) do
+      subject.clone
+    end
+
+    let!(:dolly_1) do
+      donor.clone
+    end
+
+    let!(:dolly_2) do
+      dolly_1.clone
+    end
+
+    context 'when #checks' do
+      before do
+        donor.add('donor', 1)
+        dolly_1.add('dolly', 1)
+      end
+
+      it 'works' do
+        expect(donor.checks.length).to eq(1)
+        expect(dolly_1.checks.length).to eq(1)
+        expect(dolly_2.checks).to be_empty
+        expect(donor.checks.first).to have_attributes(name: 'donor')
+        expect(dolly_1.checks.first).to have_attributes(name: 'dolly')
+      end
+    end
+
+    context 'when attr_accessors (like success_text)' do
+      before do
+        donor.success_text = 'donor succeed'
+        dolly_1.success_text = 'dolly succeed'
+      end
+
+      it 'works' do
+        expect(dolly_2.success_text).to eq(described_class.success_text)
+        expect(dolly_1.success_text).to eq('dolly succeed')
+        expect(donor.success_text).to eq('donor succeed')
+      end
+    end
+  end
 end
