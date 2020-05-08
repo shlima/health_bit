@@ -118,6 +118,20 @@ Rails.application.routes.draw do
 end
 ```
 
+```bash
+curl --verbose http://localhost:3000/health
+
+< HTTP/1.1 200 OK
+< Content-Type: text/plain;charset=utf-8
+< Cache-Control: private,max-age=0,must-revalidate,no-store
+< X-Request-Id: 59a796b9-29f7-4302-b1ff-5d0b06dd6637
+< X-Runtime: 0.006007
+< Vary: Origin
+< Transfer-Encoding: chunked
+
+4 checks passed 🎉
+```
+
 ## Password Protection
 
 Since the gem is a common rack application, you can add any rack
