@@ -22,11 +22,18 @@ Key differences:
 * [Add Checks](#add-checks)
 * [Add a Route](#add-a-route)
 * [Password Protection](#password-protection)
+* [Multiple endpoints](#multiple-endpoints)
+
+## Check Examples
+
 * [Database check](#database-check)
 * [Redis check](#redis-check)
+* [Sidekiq check](#sidekiq-check)
 * [Rails cache check](#rails-cache-check)
 * [Elasticsearch check](#elasticsearch-check)
-* [Multiple endpoints](#multiple-endpoints)
+* [RabbitMQ check](#rabbitmq-check)
+* [HTTP check](#http-check)
+* [ClickHouse check](#clickhouse-check)
 
 ## Installation
     
@@ -40,8 +47,9 @@ gem 'health_bit'
 
 ```ruby
 # config/initializers/health_bit.rb
-# DEFAULT SETTINGS ARE SHOWN BELOW
+
 HealthBit.configure do |c|
+  # DEFAULT SETTINGS ARE SHOWN BELOW
   c.success_text = '%<count>d checks passed 🎉'
   c.headers = { 
     'Content-Type' => 'text/plain;charset=utf-8', 
@@ -87,6 +95,7 @@ HealthBit.add('Docker service') do
 end
 
 # The Check can be added as an object responding to a call
+# (to be able to test your check)
 class Covid19Check 
   def self.call
     true 
@@ -138,7 +147,15 @@ end
 
 ```ruby
 HealthBit.add('Redis') do
-  Redis.current.ping == 'PONG' 
+  Redis.current.ping == 'PONG'
+end
+```
+
+## Sidekiq check
+
+```ruby
+HealthBit.add('Sidekiq') do
+  Sidekiq.redis(&:ping) == 'PONG'
 end
 ```
 
@@ -155,6 +172,30 @@ end
 ```ruby
 HealthBit.add('Elasticsearch') do
   Elasticsearch::Client.new.ping
+end
+```
+
+## RabbitMQ check
+
+```ruby
+HealthBit.add('RabbitMQ') do
+  Bunny::Connection.connect(&:connection)
+end
+```
+
+## HTTP check
+
+```ruby
+HealthBit.add('HTTP check') do
+  Net::HTTP.new('www.example.com', 80).request_get('/').kind_of?(Net::HTTPSuccess)
+end
+```
+
+## ClickHouse check
+
+```ruby
+HealthBit.add('ClickHouse') do
+  ClickHouse.connection.ping
 end
 ```
 
