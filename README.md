@@ -177,7 +177,7 @@ end
 
 ```ruby
 HealthBit.add('Rails cache') do
-  Rails.cache.read('1').nil?
+  Rails.cache.write('__health_bit__', '1', expires_in: 1.second)
 end
 ```
 
