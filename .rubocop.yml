@@ -8,7 +8,7 @@ AllCops:
     - 'bin/*'
     - 'spec/**/*'
     - 'vendor/**/*'
-  TargetRubyVersion: 2.7.1
+  TargetRubyVersion: 2.7
 
 Bundler/OrderedGems:
   Enabled: false
@@ -73,6 +73,8 @@ Layout/SpaceAroundMethodCallOperator:
   Enabled: true
 Layout/LineLength:
   Max: 140
+Layout/EmptyLinesAroundAttributeAccessor:
+  Enabled: true
 
 # ============================== Style ==============================
 Style/RescueModifier:
@@ -127,6 +129,14 @@ Style/HashTransformKeys:
   Enabled: true
 Style/HashTransformValues:
   Enabled: true
+Style/RedundantFetchBlock:
+  Enabled: true
+Style/RedundantRegexpCharacterClass:
+  Enabled: true
+Style/RedundantRegexpEscape:
+  Enabled: true
+Style/SlicingWithRange:
+  Enabled: true
 
 # ============================== Lint ==============================
 Lint/DuplicateMethods:
@@ -136,4 +146,8 @@ Lint/AmbiguousOperator:
 Lint/RaiseException:
   Enabled: true
 Lint/StructNewOverride:
+  Enabled: true
+Lint/DeprecatedOpenSSLConstant:
+  Enabled: true
+Lint/MixedRegexpCaptureTypes:
   Enabled: true
