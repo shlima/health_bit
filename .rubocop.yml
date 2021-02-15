@@ -8,7 +8,7 @@ AllCops:
     - 'bin/*'
     - 'spec/**/*'
     - 'vendor/**/*'
-  TargetRubyVersion: 2.7
+  TargetRubyVersion: 2.4
 
 Bundler/OrderedGems:
   Enabled: false
@@ -31,6 +31,14 @@ Performance/Squeeze:
 Performance/StringInclude:
   Enabled: true
 Performance/Sum:
+  Enabled: true
+Performance/BlockGivenWithExplicitBlock:
+  Enabled: true
+Performance/CollectionLiteralInLoop:
+  Enabled: true
+Performance/ConstantRegexp:
+  Enabled: true
+Performance/MethodObjectAsBlock:
   Enabled: true
 
 # ============================== Documentation ======================
@@ -96,6 +104,8 @@ Layout/LineLength:
 Layout/EmptyLinesAroundAttributeAccessor:
   Enabled: true
 Layout/BeginEndAlignment:
+  Enabled: true
+Layout/SpaceBeforeBrackets:
   Enabled: true
 
 # ============================== Style ==============================
@@ -193,6 +203,26 @@ Style/RedundantSelfAssignment:
   Enabled: true
 Style/SoleNestedConditional:
   Enabled: true
+Style/ArgumentsForwarding:
+  Enabled: true
+Style/CollectionCompact:
+  Enabled: true
+Style/DocumentDynamicEvalDefinition:
+  Enabled: true
+Style/EndlessMethod:
+  Enabled: true
+Style/HashExcept:
+  Enabled: true
+Style/IfWithBooleanLiteralBranches:
+  Enabled: true
+Style/NegatedIfElseCondition:
+  Enabled: true
+Style/NilLambda:
+  Enabled: true
+Style/RedundantArgument:
+  Enabled: true
+Style/SwapValues:
+  Enabled: true
 
 # ============================== Lint ==============================
 Lint/DuplicateMethods:
@@ -240,4 +270,36 @@ Lint/TrailingCommaInAttributeDeclaration:
 Lint/UselessMethodDefinition:
   Enabled: true
 Lint/UselessTimes:
+  Enabled: true
+Lint/AmbiguousAssignment:
+  Enabled: true
+Lint/DeprecatedConstants:
+  Enabled: true
+Lint/DuplicateBranch:
+  Enabled: true
+Lint/DuplicateRegexpCharacterClassElement:
+  Enabled: true
+Lint/EmptyBlock:
+  Enabled: true
+Lint/EmptyClass:
+  Enabled: true
+Lint/LambdaWithoutLiteralBlock:
+  Enabled: true
+Lint/NoReturnInBeginEndBlocks:
+  Enabled: true
+Lint/NumberedParameterAssignment:
+  Enabled: true
+Lint/OrAssignmentToConstant:
+  Enabled: true
+Lint/RedundantDirGlobSort:
+  Enabled: true
+Lint/SymbolConversion:
+  Enabled: true
+Lint/ToEnumArguments:
+  Enabled: true
+Lint/TripleQuotes:
+  Enabled: true
+Lint/UnexpectedBlockArity:
+  Enabled: true
+Lint/UnmodifiedReduceAccumulator:
   Enabled: true

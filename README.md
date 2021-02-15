@@ -1,4 +1,4 @@
-[![pipeline status](https://travis-ci.com/shlima/health_bit.svg?branch=master)](https://travis-ci.com/shlima/health_bit)
+![CI](https://github.com/shlima/health_bit/workflows/CI/badge.svg)
 [![gem version](https://badge.fury.io/rb/health_bit.svg)](https://rubygems.org/gems/health_bit)
 
 # HealthBit
