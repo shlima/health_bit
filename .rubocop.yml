@@ -13,6 +13,10 @@ AllCops:
 Bundler/OrderedGems:
   Enabled: false
 
+# ============================== Gemspec ======================
+Gemspec/DateAssignment:
+  Enabled: true
+
 # ============================== Performance ======================
 Performance/AncestorsInclude:
   Enabled: true
@@ -39,6 +43,10 @@ Performance/CollectionLiteralInLoop:
 Performance/ConstantRegexp:
   Enabled: true
 Performance/MethodObjectAsBlock:
+  Enabled: true
+Performance/RedundantEqualityComparisonBlock:
+  Enabled: true
+Performance/RedundantSplitRegexpArgument:
   Enabled: true
 
 # ============================== Documentation ======================
@@ -222,6 +230,10 @@ Style/NilLambda:
 Style/RedundantArgument:
   Enabled: true
 Style/SwapValues:
+  Enabled: true
+Style/HashConversion:
+  Enabled: true
+Style/StringChars:
   Enabled: true
 
 # ============================== Lint ==============================
