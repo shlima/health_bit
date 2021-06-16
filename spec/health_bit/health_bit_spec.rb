@@ -103,7 +103,7 @@ RSpec.describe HealthBit do
         subject.add('foo', Class.new)
       end
 
-      it 'add check' do
+      it 'adds check' do
         expect(subject.checks.length).to eq(1)
         expect(subject.checks.first).to have_attributes(name: 'foo')
       end
@@ -134,7 +134,7 @@ RSpec.describe HealthBit do
       end
     end
 
-    context 'when nor handler or block passed' do
+    context 'when neither handler nor block passed' do
       let(:add) do
         subject.add('bar')
       end
@@ -156,7 +156,7 @@ RSpec.describe HealthBit do
         subject.add('foo') { false }
       end
 
-      it 'print backtrace' do
+      it 'prints backtrace' do
         expect(response).to include('health_bit/lib/health_bit')
       end
     end

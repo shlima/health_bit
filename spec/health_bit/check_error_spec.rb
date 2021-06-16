@@ -13,11 +13,11 @@ RSpec.describe HealthBit::CheckError do
         'Check <foo> failed'
       end
 
-      it 'woks with the empty argv' do
+      it 'works with the empty argv' do
         expect(subject.to_s).to eq(expectation)
       end
 
-      it 'woks with the short argv' do
+      it 'works with the short argv' do
         expect(subject.to_s(described_class::FORMAT_SHORT)).to eq(expectation)
       end
     end
