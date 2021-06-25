@@ -32,7 +32,7 @@ RSpec.describe HealthBit do
   end
 
   context 'when app1' do
-    it 'passed' do
+    it 'passes' do
       status, headers, content = app1.rack.call({})
 
       expect(status).to eq(201)
@@ -42,7 +42,7 @@ RSpec.describe HealthBit do
   end
 
   context 'when app2' do
-    it 'passed' do
+    it 'passes' do
       status, headers, content = app2.rack.call({})
 
       expect(status).to eq(503)
