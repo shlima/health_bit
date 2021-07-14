@@ -82,6 +82,8 @@ HealthBit.add('PostgreSQL') do
 end
 
 HealthBit.add('Custom') do
+  next(false) if 1 != 0 
+  
   true
 end
 
