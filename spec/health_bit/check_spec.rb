@@ -6,6 +6,7 @@ RSpec.describe HealthBit::Check do
           described_class.new('foo', -> { nil }),
           described_class.new('foo', -> { false }),
           described_class.new('foo', -> { raise }),
+          described_class.new('foo', -> { break(false); true }),
           described_class.new('foo', Class.new { def self.call ; false ; end }),
           described_class.new('foo', Class.new { def self.call ; nil ; end }),
           described_class.new('foo', Class.new { def self.call ; raise ; end }),
@@ -23,6 +24,7 @@ RSpec.describe HealthBit::Check do
       let(:subjects) do
         [
           described_class.new('bar', -> { true }),
+          described_class.new('bar', -> { break(true); false }),
           described_class.new('bar', Class.new { def self.call ; true ; end }),
         ]
       end

@@ -8,9 +8,12 @@ AllCops:
     - 'bin/*'
     - 'spec/**/*'
     - 'vendor/**/*'
-  TargetRubyVersion: 2.4
+  TargetRubyVersion: 3
 
 Bundler/OrderedGems:
+  Enabled: false
+
+Gemspec/RequiredRubyVersion:
   Enabled: false
 
 # ============================== Gemspec ======================
@@ -48,6 +51,8 @@ Performance/RedundantEqualityComparisonBlock:
   Enabled: true
 Performance/RedundantSplitRegexpArgument:
   Enabled: true
+Performance/MapCompact:
+  Enabled: true
 
 # ============================== Documentation ======================
 Style/Documentation:
@@ -75,6 +80,8 @@ Naming/MethodParameterName:
   Enabled: false
 Naming/AccessorMethodName:
   Enabled: false
+Naming/InclusiveLanguage:
+  Enabled: true
 
 # ============================== Layout =============================
 Layout/HashAlignment:
@@ -114,6 +121,8 @@ Layout/EmptyLinesAroundAttributeAccessor:
 Layout/BeginEndAlignment:
   Enabled: true
 Layout/SpaceBeforeBrackets:
+  Enabled: true
+Layout/LineEndStringConcatenationIndentation:
   Enabled: true
 
 # ============================== Style ==============================
@@ -235,6 +244,12 @@ Style/HashConversion:
   Enabled: true
 Style/StringChars:
   Enabled: true
+Style/InPatternThen:
+  Enabled: true
+Style/MultilineInPatternThen:
+  Enabled: true
+Style/QuotedSymbols:
+  Enabled: true
 
 # ============================== Lint ==============================
 Lint/DuplicateMethods:
@@ -314,4 +329,6 @@ Lint/TripleQuotes:
 Lint/UnexpectedBlockArity:
   Enabled: true
 Lint/UnmodifiedReduceAccumulator:
+  Enabled: true
+Lint/EmptyInPattern:
   Enabled: true
