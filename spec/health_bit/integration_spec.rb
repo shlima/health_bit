@@ -7,6 +7,10 @@ RSpec.describe HealthBit do
     described_class.clone
   end
 
+  let(:app3) do
+    described_class.clone
+  end
+
   before do
     # just initialize instance variable
     # inside a donor
@@ -31,6 +35,15 @@ RSpec.describe HealthBit do
     end
   end
 
+  before do
+    app3.headers = { 'app3' => 1 }
+    app3.success_code = 200
+    app3.fail_code = 500
+    app3.add('app3') do |env|
+      env["FOO"] == "BAR"
+    end
+  end
+
   context 'when app1' do
     it 'passes' do
       status, headers, content = app1.rack.call({})
@@ -48,6 +61,16 @@ RSpec.describe HealthBit do
       expect(status).to eq(503)
       expect(headers).to eq('app2' => 2)
       expect(content).to contain_exactly("Check <app2> failed")
+    end
+  end
+
+  context 'when app3' do
+    it 'passes' do
+      status, headers, content = app3.rack.call({ 'FOO' => 'BAR' })
+
+      expect(status).to eq(200)
+      expect(headers).to eq('app3' => 1)
+      expect(content).to contain_exactly('1 checks passed 🎉')
     end
   end
 end
