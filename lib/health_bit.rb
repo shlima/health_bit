@@ -60,9 +60,9 @@ module HealthBit
   end
 
   # @return [nil, CheckError]
-  def check
+  def check(env)
     checks.each do |check|
-      (exception = check.call).nil? ? next : (return exception)
+      (exception = check.call(env)).nil? ? next : (return exception)
     end
 
     nil
@@ -73,8 +73,8 @@ module HealthBit
       format = this.show_backtrace ? CheckError::FORMAT_FULL : CheckError::FORMAT_SHORT
 
       Rack::Builder.new do
-        run ->(_env) do
-          if (error = this.check)
+        run ->(env) do
+          if (error = this.check(env))
             [this.fail_code, this.headers, [error.to_s(format)]]
           else
             [this.success_code, this.headers, [this.success_text]]

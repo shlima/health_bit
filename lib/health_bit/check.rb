@@ -11,8 +11,11 @@ module HealthBit
 
     # @return [nil] if its ok
     # @return [CheckError] if not
-    def call
-      raise('The check has returned a negative value') unless handler.call
+    def call(env = {})
+      arity = handler.is_a?(Proc) ? handler.arity : handler.method(:call).arity
+      return if arity == 1 ? handler.call(env) : handler.call
+
+      raise('The check has returned a negative value')
     rescue Exception => e # rubocop:disable Lint/RescueException
       CheckError.new(name, exception: e)
     end
