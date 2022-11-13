@@ -35,5 +35,24 @@ RSpec.describe HealthBit::Check do
         end
       end
     end
+
+    context 'env' do
+      let(:subjects) do
+        [
+          described_class.new('foo', -> (env) { env.call }),
+          described_class.new('foo', Class.new { def self.call(env) ; env.call ; end }),
+          described_class.new('foo', Proc.new { |env| env.call  }),
+        ]
+      end
+
+
+      it 'passes env to a handler' do
+        subjects.each do |subject|
+          env = double('student')
+          expect(env).to receive(:call).once
+          subject.call(env)
+        end
+      end
+    end
   end
 end

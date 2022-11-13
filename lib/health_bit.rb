@@ -4,6 +4,10 @@ require 'rack'
 require 'health_bit/version'
 
 module HealthBit
+  autoload :Check, 'health_bit/check'
+  autoload :CheckError, 'health_bit/check_error'
+  autoload :Formatter, 'health_bit/formatter'
+
   DEFAULT_SUCCESS_TEXT = '%<count>d checks passed 🎉'
   DEFAULT_HEADERS = {
     'Content-Type' => 'text/plain;charset=utf-8',
@@ -11,13 +15,11 @@ module HealthBit
   }.freeze
   DEFAULT_SUCCESS_CODE = 200
   DEFAULT_FAIL_CODE = 500
-
-  autoload :Check, 'health_bit/check'
-  autoload :CheckError, 'health_bit/check_error'
+  DEFAULT_FORMATTER = Formatter.new
 
   extend self # rubocop:disable Style/ModuleFunction
 
-  attr_writer :success_text, :success_code, :fail_code, :headers
+  attr_writer :success_text, :success_code, :fail_code, :headers, :formatter
   attr_accessor :show_backtrace
 
   def success_text
@@ -34,6 +36,11 @@ module HealthBit
 
   def headers
     (@headers || DEFAULT_HEADERS).dup
+  end
+
+  # @return [Formatter]
+  def formatter
+    @formatter || DEFAULT_FORMATTER
   end
 
   def checks
@@ -69,16 +76,20 @@ module HealthBit
   end
 
   def rack(this = self)
-    @rack ||= begin
-      format = this.show_backtrace ? CheckError::FORMAT_FULL : CheckError::FORMAT_SHORT
-
-      Rack::Builder.new do
-        run ->(env) do
-          if (error = this.check(env))
-            [this.fail_code, this.headers, [error.to_s(format)]]
-          else
-            [this.success_code, this.headers, [this.success_text]]
-          end
+    @rack ||= Rack::Builder.new do
+      run ->(env) do
+        if (error = this.check(env))
+          [
+            this.formatter.code_failure(error, env, this),
+            this.formatter.headers_failure(error, env, this),
+            [this.formatter.format_failure(error, env, this)]
+          ]
+        else
+          [
+            this.formatter.code_success(env, this),
+            this.formatter.headers_success(env, this),
+            [this.formatter.format_success(error, env, this)]
+          ]
         end
       end
     end

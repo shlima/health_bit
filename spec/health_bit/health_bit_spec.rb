@@ -51,6 +51,24 @@ RSpec.describe HealthBit do
     end
   end
 
+  describe '#formatter, #formatter=' do
+    context 'when default' do
+      it 'works' do
+        expect(subject.formatter).to be_a(HealthBit::Formatter)
+      end
+    end
+
+    context 'when set' do
+      before do
+        subject.formatter = 0
+      end
+
+      it 'works' do
+        expect(subject.formatter).to eq(0)
+      end
+    end
+  end
+
   describe '#headers, #headers=' do
     context 'when default' do
       it 'works' do

@@ -23,6 +23,7 @@ Key differences:
 * [Add a Route](#add-a-route)
 * [Password Protection](#password-protection)
 * [Multiple endpoints](#multiple-endpoints)
+* [Custom formatter](#custom-formatter)
 
 ## Check Examples
 
@@ -58,6 +59,8 @@ HealthBit.configure do |c|
   c.success_code = 200
   c.fail_code = 500
   c.show_backtrace = false
+  c.formatter = HealthBit::Formatter.new
+  # DEFAULT SETTINGS ARE SHOWN ABOVE
 
   c.add('Check name') do
     # Body check, should returns `true`
@@ -77,29 +80,29 @@ Example checks:
 
 ```ruby
 ## Successful checks
-HealthBit.add('PostgreSQL') do
+HealthBit.add('PostgreSQL') do |env|
   ApplicationRecord.connection.select_value('SELECT 1') == 1
 end
 
-HealthBit.add('Custom') do
+HealthBit.add('Custom') do |env|
   next(false) if 1 != 0 
   
   true
 end
 
 ## Failed checks
-HealthBit.add('Database') do
+HealthBit.add('Database') do |env|
   false
 end
 
-HealthBit.add('Docker service') do
+HealthBit.add('Docker service') do |env|
   raise 'not responding'
 end
 
 # The Check can be added as an object responding to a call
 # (to be able to test your check)
 class Covid19Check
-  def self.call
+  def self.call(env)
     false
   end
 end
@@ -154,7 +157,7 @@ end
 ## Database check
 
 ```ruby
-HealthBit.add('Database') do
+HealthBit.add('Database') do |env|
   ApplicationRecord.connection.select_value('SELECT 1') == 1
 end
 ```
@@ -162,7 +165,7 @@ end
 ## Redis check
 
 ```ruby
-HealthBit.add('Redis') do
+HealthBit.add('Redis') do |env|
   Redis.current.ping == 'PONG'
 end
 ```
@@ -170,7 +173,7 @@ end
 ## Sidekiq check
 
 ```ruby
-HealthBit.add('Sidekiq') do
+HealthBit.add('Sidekiq') do |env|
   Sidekiq.redis(&:ping) == 'PONG'
 end
 ```
@@ -178,7 +181,7 @@ end
 ## Rails cache check
 
 ```ruby
-HealthBit.add('Rails cache') do
+HealthBit.add('Rails cache') do |env|
   Rails.cache.write('__health_bit__', '1', expires_in: 1.second)
 end
 ```
@@ -186,7 +189,7 @@ end
 ## Elasticsearch check
 
 ```ruby
-HealthBit.add('Elasticsearch') do
+HealthBit.add('Elasticsearch') do |env|
   Elasticsearch::Client.new.ping
 end
 ```
@@ -194,7 +197,7 @@ end
 ## RabbitMQ check
 
 ```ruby
-HealthBit.add('RabbitMQ') do
+HealthBit.add('RabbitMQ') do |env|
   Bunny::Connection.connect(&:connection)
 end
 ```
@@ -202,7 +205,7 @@ end
 ## HTTP check
 
 ```ruby
-HealthBit.add('HTTP check') do
+HealthBit.add('HTTP check') do |env|
   Net::HTTP.new('www.example.com', 80).request_get('/').kind_of?(Net::HTTPSuccess)
 end
 ```
@@ -210,7 +213,7 @@ end
 ## ClickHouse check
 
 ```ruby
-HealthBit.add('ClickHouse') do
+HealthBit.add('ClickHouse') do |env|
   ClickHouse.connection.ping
 end
 ```
@@ -227,11 +230,11 @@ of your application as a whole. Below is an example for the Rails.
 DockerCheck = HealthBit.clone
 AppCheck = HealthBit.clone
 
-DockerCheck.add('Docker Health') do
+DockerCheck.add('Docker Health') do |env|
   true
 end
 
-AppCheck.add('App Health') do
+AppCheck.add('App Health') do |env|
   ApplicationRecord.connection.select_value("SELECT 't'::boolean")
 end
 ```
@@ -242,5 +245,34 @@ end
 Rails.application.routes.draw do
   mount DockerCheck.rack => '/docker'
   mount AppCheck.rack => '/app'
+end
+```
+
+## Custom formatter
+
+You can easily [configure](https://github.com/shlima/health_bit/blob/master/lib/health_bit/formatter.rb) custom format of response body, headers and
+http statuses.
+
+```ruby
+class JsonFormatter < HealthBit::Formatter
+  # @param error HealthBit::CheckError
+  # @param env Hash
+  # @param health_bit HealthBit
+  def format_failure(error, env, health_bit)
+    { 'status': 'error' }.to_json
+  end
+
+  # @param error HealthBit::CheckError
+  # @param env Hash
+  # @param health_bit HealthBit
+  def headers_failure(error, env, health_bit)
+    {
+      'Content-Type' => 'application/json'
+    }
+  end
+end
+
+HealthBit.configure do |c|
+  c.formatter = JsonFormatter.new
 end
 ```
